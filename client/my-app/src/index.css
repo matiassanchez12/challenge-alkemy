@@ -1,0 +1,12 @@
+html,
+body,
+#root {
+    box-sizing: border-box;
+    height: 100%;
+    background-color: gray;
+    color: white;
+}
+
+html * {
+    box-sizing: inherit;
+}
