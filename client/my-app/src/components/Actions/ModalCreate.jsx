@@ -1,7 +1,7 @@
 import { Modal } from "react-bootstrap";
-import MyForm from "./MyForm";
+import MyForm from "../Form/FormCreate";
 
-function MyModal({refreshTable, ...props}) {
+function MyModal({refreshTable, createElement, ...props}) {
   return (
     <Modal
       {...props}
@@ -15,7 +15,7 @@ function MyModal({refreshTable, ...props}) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <MyForm refreshTable={refreshTable} />
+        <MyForm createElement={createElement} refreshTable={refreshTable} />
       </Modal.Body>
     </Modal>
   );

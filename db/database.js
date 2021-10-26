@@ -7,6 +7,15 @@ const db = mysql.createPool({
     database: "crud",
 });
 
+
+exports.getOne = (req, res) => {
+    const id = req.params.id;
+    const sqlSelect = "SELECT id, concepto, monto, tipo, fecha from presupuesto where id = ?";
+    db.query(sqlSelect, id, (err, result) => {
+        res.send(result)
+    });
+};
+
 exports.list = (req, res) => {
     const sqlSelect = "SELECT id, concepto, monto, tipo, fecha from presupuesto";
     db.query(sqlSelect, (err, result) => {

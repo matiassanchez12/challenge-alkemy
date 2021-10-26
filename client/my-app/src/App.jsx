@@ -1,15 +1,26 @@
-import { Container } from "react-bootstrap";
 import Home from "./components/Home";
-import New from "./components/New";
-import {Breadcrumb} from "react-bootstrap"
+import Login from "./components/Login";
+import Register from "./components/Register";
+
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <Container>
-      <Home />
-    </Container>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route path="/home">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

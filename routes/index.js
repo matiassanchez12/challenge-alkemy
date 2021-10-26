@@ -8,6 +8,7 @@ var router = express.Router();
 router.get('/', hello.hello);
 router.post('/insert', db.create);
 router.get('/list', db.list);
+router.get('/getone/:id', db.getOne);
 router.delete('/remove/:id', db.remove);
 router.put('/edit/:id', db.edit);
 

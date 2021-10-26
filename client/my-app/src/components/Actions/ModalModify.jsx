@@ -1,15 +1,18 @@
-import MyFormModify from "../MyFormModify";
+import FormModify from "../Form/FormModify";
 import { Modal } from "react-bootstrap";
 import Axios from "axios";
 
-function ModalModify({ data, refreshTable, ...props }) {
+function ModalModify({ data, show, onHide, setList }) {
   const editData = (values) => {
     Axios.put(`http://localhost:3001/api/edit/${data.id}`, values);
-    refreshTable();
+    setList({...values, id: data.id, tipo: data.tipo}, 'update')
+    console.log(values)
+    onHide();
   };
   return (
     <Modal
-      {...props}
+      show={show}
+      onHide={onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -20,7 +23,7 @@ function ModalModify({ data, refreshTable, ...props }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <MyFormModify data={data} editData={editData} />
+        <FormModify data={data} editData={editData} />
       </Modal.Body>
     </Modal>
   );

@@ -1,40 +1,32 @@
 import { React, memo, useState } from "react";
-import styled from "styled-components";
-import { Form, Button } from "react-bootstrap";
-import Modal from "../MyModal";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import Modal from "../Actions/ModalCreate";
+import Axios from "axios";
 
-const Control = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  margin-bottom: 20px;
-  align-items: center;
-`;
-
-const Label = styled.label`
-  display: inline-block;
-  margin-bottom: 5px;
-`;
-
-const ListHeader = ({ setFilter, refreshTable }) => {
+const ListHeader = ({ setFilter, setList }) => {
   const [modalShow, setModalShow] = useState(false);
+
+  const createElement = (values) => {
+    Axios.post("http://localhost:3001/api/insert", values).then(() => {});
+    setList(values, 'create')
+  };
+
   return (
-    <Control>
-      <div>
+    <Row style={{marginBottom: 25, marginTop: 25}}>
+      <Col sm={9}>
         <Button onClick={() => setModalShow(true)}>
           Agregar <i class="fas fa-plus"></i>
         </Button>
-      </div>
-      <div>
-        <Label>Filtrar por: </Label>
+      </Col>
+      <Col sm={3}>
         <Form.Select onChange={(e) => setFilter(e.target.value)}>
-          <option value="">Seleccionar tipo</option>
+          <option value="">Filtrar por tipo</option>
           <option value="ingreso">Ingreso</option>
           <option value="egreso">Egreso</option>
         </Form.Select>
-      </div>
-      <Modal refreshTable={refreshTable} show={modalShow} onHide={() => setModalShow(false)} />
-    </Control>
+      </Col>
+      <Modal show={modalShow} onHide={() => setModalShow(false)} createElement={createElement} />
+    </Row>
   );
 };
 
