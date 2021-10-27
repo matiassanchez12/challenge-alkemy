@@ -9,7 +9,7 @@ const Container = styled.div`
   width: 400px;
 `;
 
-const Formlogin = () => {
+const FormRegister = () => {
   const onSubmit = (values) => {
     console.log(values);
   };
@@ -17,21 +17,32 @@ const Formlogin = () => {
     <Container>
       <Formik
         initialValues={{
-          email: "admin",
-          password: "admin",
+          name: "",
+          email: "",
+          password: "",
+          repassword: "",
         }}
         onSubmit={onSubmit}
         validationSchema={Yup.object({
+          name: Yup.string().required("Obligatorio"),
           email: Yup.string().required("Obligatorio"),
           password: Yup.string().required("Obligatorio"),
+          repassword: Yup.string().required("Obligatorio"),
         })}
       >
         <Form>
-          <Input type="text" label="Email" name="email" />
-          <Input type="password" label="Password" name="password" />
+          <Input type="text" label="Tu nombre*" name="name" />
+          <Input type="text" label="Email*" name="email" />
+          <Input
+            type="text"
+            placeholder="Al menos 6 caracteres"
+            label="Password*"
+            name="password"
+          />
+          <Input type="text" label="Confirmar password*" name="repassword" />
           <div>
             <Button type="submit" style={{ width: "100%" }}>
-              <i class="fas fa-sign-in-alt"></i> Ingresar
+              Crear cuenta <i class="fas fa-arrow-right"></i>
             </Button>
           </div>
         </Form>
@@ -40,4 +51,4 @@ const Formlogin = () => {
   );
 };
 
-export default Formlogin;
+export default FormRegister;

@@ -3,15 +3,17 @@ import { Table, Button } from "react-bootstrap";
 import ListHeader from "./Form/ListHeader";
 import Reducer from "./Reducer";
 import ModalDelete from "./Actions/ModalDelete";
-import ModalModify from "./Actions/ModalModify";
 import Axios from "axios";
+import FormCreate from "./Form/FormCreate";
+import FormUpdate from "./Form/FormUpdate";
+import ButtonActive from "./Form/CustomToggleButton";
+import { Accordion } from "react-bootstrap";
 
 const MyTable = () => {
   const [dataElement, setDataElement] = useState([]);
   const [filter, setFilter] = useState("");
   const [initialState, setInitialState] = useState([]);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalModify, setShowModalModify] = useState(false);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/list").then((response) => {
@@ -49,6 +51,7 @@ const MyTable = () => {
 
   return (
     <div>
+      <FormCreate setList={refreshList} />
       <ListHeader setFilter={setFilter} setList={refreshList} />
       <Table striped bordered hover variant="dark" responsive>
         <thead>
@@ -61,12 +64,12 @@ const MyTable = () => {
             <th style={{ textAlign: "center" }}>Acción</th>
           </tr>
         </thead>
-        <tbody>
-          {initialState !== [] ? (
-            Reducer(initialState, { type: "FILTER", payload: filter }).map(
-              (data, i) => {
-                return (
-                  <tr key={i} style={{ fontSize: "0.9em" }}>
+        {initialState !== [] ? (
+          Reducer(initialState, { type: "FILTER", payload: filter }).map(
+            (data, i) => {
+              return (
+                <Accordion as="tbody" defaultActiveKey="1">
+                  <tr key={i}>
                     <td>{i}</td>
                     <td>{data.concepto}</td>
                     <td>{data.monto}</td>
@@ -76,6 +79,7 @@ const MyTable = () => {
                       <Button
                         size="sm"
                         variant="danger"
+                        style={{ marginRight: "5px" }}
                         onClick={() => {
                           setShowModalDelete(true);
                           setDataElement(data);
@@ -83,34 +87,25 @@ const MyTable = () => {
                       >
                         <i class="far fa-trash-alt"></i>
                       </Button>
-                      <Button
-                        style={{ marginLeft: "5px" }}
-                        size="sm"
-                        variant="warning"
-                        onClick={() => {
-                          setShowModalModify(true);
-                          setDataElement(data);
-                        }}
-                      >
+                      <ButtonActive eventKey="0">
                         <i class="fas fa-edit"></i>
-                      </Button>
+                      </ButtonActive>
                     </td>
                     <td style={{ display: "none" }}>{data.id}</td>
                   </tr>
-                );
-              }
-            )
-          ) : (
-            <div>No hay datos para mostrar..</div>
-          )}
-        </tbody>
+                  <td colspan="6" style={{border: 0}}>
+                    <Accordion.Collapse eventKey="0">
+                      <FormUpdate data={data} setList={refreshList} />
+                    </Accordion.Collapse>
+                  </td>
+                </Accordion>
+              );
+            }
+          )
+        ) : (
+          <div>No hay datos para mostrar..</div>
+        )}
       </Table>
-      <ModalModify
-        show={showModalModify}
-        onHide={() => setShowModalModify(false)}
-        data={dataElement}
-        setList={refreshList}
-      />
       <ModalDelete
         show={showModalDelete}
         onHide={() => setShowModalDelete(false)}

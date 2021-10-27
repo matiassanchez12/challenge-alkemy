@@ -4,13 +4,26 @@ import Select from "./Select";
 import { Formik, Form } from "formik";
 import { Button, Row, Col } from "react-bootstrap";
 import * as Yup from "yup";
+import styled from "styled-components";
+import Axios from "axios";
 
-const MyForm = ({ createElement }) => {
-  const onSubmit = (values) => {
-    createElement(values)
+const Container = styled.div`
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 8px;
+`;
+const MyForm = ({ setList }) => {
+  const onSubmit = (values, { resetForm }) => {
+    Axios.post("http://localhost:3001/api/insert", values);
+    setList(values, "create");
+    resetForm();
+  };
+  const refreshData = ({ resetForm }) => {
+    resetForm();
   };
   return (
-    <div>
+    <Container>
+      <h3>Agregar registro</h3>
       <Formik
         initialValues={{
           concepto: "",
@@ -20,39 +33,58 @@ const MyForm = ({ createElement }) => {
         }}
         onSubmit={onSubmit}
         validationSchema={Yup.object({
-          concepto: Yup.string()
-            .required("Obligatorio"),
+          concepto: Yup.string().required("Obligatorio"),
           monto: Yup.number()
             .required("Obligatorio")
             .typeError("Debe ser un número"),
           fecha: Yup.date()
             .required("Obligatorio")
             .typeError("Debe ser una fecha"),
-          tipo: Yup.string()
-            .required("Obligatorio")
+          tipo: Yup.string().required("Obligatorio"),
         })}
       >
         <Form>
-          <Row>
-            <Col sm={6}>
+          <Row style={{ justifyContent: "center" }}>
+            <Col sm={2}>
               <Input type="text" name="concepto" label="Concepto" />
+            </Col>
+            <Col sm={2}>
+              <Input type="text" name="monto" label="Monto" />
+            </Col>
+            <Col sm={2}>
               <Input type="date" name="fecha" label="Fecha" />
             </Col>
-            <Col sm={6}>
-              <Input type="text" name="monto" label="Monto" />
+            <Col sm={2}>
               <Select name="tipo" label="Tipo">
                 <option value="">Seleccionar tipo</option>
                 <option value="ingreso">Ingreso</option>
                 <option value="egreso">Egreso</option>
               </Select>
             </Col>
+            <Col sm={3} style={{ alignSelf: "center" }}>
+              <Button
+                size="sm"
+                type="submit"
+                style={{ marginRight: 5 }}
+                variant="success"
+              >
+                <i class="fas fa-check" style={{ marginRight: 5 }}></i>Agregar
+              </Button>
+              <Button
+                size="sm"
+                type="submit"
+                variant="warning"
+                onClick={() => refreshData}
+              >
+                <i class="fas fa-redo-alt" style={{ marginRight: 5 }}></i>
+                Limpiar datos
+              </Button>
+            </Col>
           </Row>
-          <Button type="submit" style={{ marginTop: 20 }} variant="success">
-            <i class="fas fa-check" style={{ marginRight: 5 }}></i>Agregar
-          </Button>
         </Form>
       </Formik>
-    </div>
+      <hr />
+    </Container>
   );
 };
 

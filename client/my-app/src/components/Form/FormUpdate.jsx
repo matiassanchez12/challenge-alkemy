@@ -3,10 +3,13 @@ import { Formik, Form } from "formik";
 import Input from "./Input";
 import { Button, Row, Col } from "react-bootstrap";
 import * as Yup from "yup";
+import Axios from "axios";
 
-const MyForm = ({ data, editData }) => {
+const MyForm = ({ data, setList }) => {
   const onSubmit = (values) => {
-    editData(values);
+    const newData = { ...values, id: data.id, tipo: data.tipo };
+    setList(newData, "update");
+    Axios.put(`http://localhost:3001/api/edit/${data.id}`, newData);
   };
   return (
     <div>
@@ -28,22 +31,27 @@ const MyForm = ({ data, editData }) => {
         })}
       >
         <Form>
-          <Row>
-            <Col sm={6}>
+          <Row style={{ justifyContent: "center" }}>
+            <Col sm={2}>
               <Input type="text" name="concepto" label="Concepto" />
             </Col>
-            <Col sm={6}>
+            <Col sm={2}>
               <Input type="text" name="monto" label="Monto" />
             </Col>
-          </Row>
-          <Row>
-            <Col sm={6}>
+            <Col sm={2}>
               <Input type="date" name="fecha" label="Fecha" />
             </Col>
+            <Col sm={2} style={{ alignSelf: "center" }}>
+              <Button
+                size="sm"
+                type="submit"
+                style={{ marginRight: 5 }}
+                variant="success"
+              >
+                <i class="fas fa-check" style={{ marginRight: 5 }}></i>Editar
+              </Button>
+            </Col>
           </Row>
-          <Button type="submit" variant="success" style={{ marginTop: 20 }}>
-            <i class="fas fa-check" style={{ marginRight: 5 }}></i>Editar
-          </Button>
         </Form>
       </Formik>
     </div>
