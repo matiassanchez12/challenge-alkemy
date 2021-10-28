@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Register = () => {
-  const onSubmit = (values) => {
-    console.log(values);
-  };
   const pageVariants = {
     in: {
       opacity: 1,

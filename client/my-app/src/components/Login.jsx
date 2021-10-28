@@ -2,26 +2,9 @@ import { React } from "react";
 import Form from "./Form/FormLogin";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import Motion from "./MotionComponent";
 
 const Login = () => {
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-  const pageVariants = {
-    in: {
-      opacity: 1,
-      x: 0,
-    },
-    out: {
-      opacity: 0,
-      x: "-100vw",
-    },
-  };
-  const pageTransition = {
-    type: "spring",
-    stiffness: 50,
-  };
   return (
     <Row
       style={{
@@ -32,23 +15,8 @@ const Login = () => {
       }}
     >
       <Col sm={6}>
-        <motion.div
-          initial="out"
-          animate="in"
-          exit="out"
-          variants={pageVariants}
-          transition={pageTransition}
-          style={{
-            height: "100%",
-            justifyContent: "center",
-            alignSelf: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <h2>Bienvenido a Mis gastos App</h2>
-          <hr />
+        <Motion>
+          <h2 style={{ marginBottom: 35 }}>Bienvenido a Mis gastos App</h2>
           <Form />
           <div style={{ marginTop: 35 }}>
             <Link
@@ -63,7 +31,7 @@ const Login = () => {
               ¿No tenes una cuenta? <b>Registrate!</b>
             </Link>
           </div>
-        </motion.div>
+        </Motion>
       </Col>
       <Col
         sm={6}

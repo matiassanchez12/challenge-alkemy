@@ -1,20 +1,30 @@
-import React from "react";
+import { React, useState } from "react";
 import Input from "./Input";
 import { Formik, Form } from "formik";
-import { Button } from "react-bootstrap";
+import { Button, Alert } from "react-bootstrap";
 import * as Yup from "yup";
-import styled from "styled-components";
-
-const Container = styled.div`
-  width: 400px;
-`;
+import Axios from "axios";
 
 const Formlogin = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+  const [invalidUser, setInvalidUser] = useState(false);
+  const onSubmit = async (values) => {
+    const res = await Axios.post(
+      "http://localhost:3001/users/findUser",
+      values
+    );
+    if (res.data === "ok") {
+      window.location.href = "http://localhost:3000/home";
+    } else {
+      setInvalidUser(true);
+    }
   };
   return (
-    <Container>
+    <div style={{ width: 400 }}>
+      {invalidUser ? (
+        <Alert variant="danger">
+          El email o el password ingresados son incorrectos
+        </Alert>
+      ) : null}
       <Formik
         initialValues={{
           email: "admin",
@@ -36,7 +46,7 @@ const Formlogin = () => {
           </div>
         </Form>
       </Formik>
-    </Container>
+    </div>
   );
 };
 

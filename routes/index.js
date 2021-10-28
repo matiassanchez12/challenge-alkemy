@@ -1,15 +1,12 @@
 var express = require('express');
-var hello = require('../controller/hello')
-var db = require('../db/database')
+var budgets = require('../controller/budgets.js')
 
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', hello.hello);
-router.post('/insert', db.create);
-router.get('/list', db.list);
-router.get('/getone/:id', db.getOne);
-router.delete('/remove/:id', db.remove);
-router.put('/edit/:id', db.edit);
+router.post('/insert', budgets.create);
+router.get('/list', budgets.list);
+router.delete('/remove/:id', budgets.remove);
+router.put('/edit/:id', budgets.edit);
 
 module.exports = router;

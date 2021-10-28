@@ -1,20 +1,5 @@
-const mysql = require("mysql");
+const { db } = require('../db/db.js');
 
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "379784577a",
-    database: "crud",
-});
-
-
-exports.getOne = (req, res) => {
-    const id = req.params.id;
-    const sqlSelect = "SELECT id, concepto, monto, tipo, fecha from presupuesto where id = ?";
-    db.query(sqlSelect, id, (err, result) => {
-        res.send(result)
-    });
-};
 
 exports.list = (req, res) => {
     const sqlSelect = "SELECT id, concepto, monto, tipo, fecha from presupuesto";
