@@ -27,7 +27,6 @@ export default function reducer (state, action) {
         return listFiltered;
       }
       default: {
-          console.log('red', state)
           return state;
       }
 
