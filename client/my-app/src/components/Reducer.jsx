@@ -1,6 +1,19 @@
 export default function reducer (state, action) {
     switch (action.type) {
-      case 'FILTER': {
+      case 'category': {
+        const categorySelected = action.payload;
+  
+        if ('' === categorySelected) {
+            return state;
+        }
+
+        const listFiltered = state.filter (
+          data => data.categoria === categorySelected
+        );
+  
+        return listFiltered;
+      }
+      case 'type': {
         const typeSelected = action.payload;
   
         if ('' === typeSelected) {
@@ -14,6 +27,7 @@ export default function reducer (state, action) {
         return listFiltered;
       }
       default: {
+          console.log('red', state)
           return state;
       }
 

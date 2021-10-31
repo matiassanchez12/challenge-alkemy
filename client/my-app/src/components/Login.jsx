@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Motion from "./MotionComponent";
 
-const Login = () => {
+const Login = ({setUser}) => {
   return (
     <Row
       style={{
@@ -17,7 +17,7 @@ const Login = () => {
       <Col sm={6}>
         <Motion>
           <h2 style={{ marginBottom: 35 }}>Bienvenido a Mis gastos App</h2>
-          <Form />
+          <Form setUser={({data, active})=>setUser({data, active})} />
           <div style={{ marginTop: 35 }}>
             <Link
               to="/register"

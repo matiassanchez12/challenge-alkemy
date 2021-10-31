@@ -1,12 +1,12 @@
-var express = require('express');
+const express = require("express");
 
-var users = require('../controller/users')
+const users = require("../controller/users");
 
-var router = express.Router();
+const router = express.Router();
 
 /* GET users listing. */
-router.get('/list', users.list);
-router.post('/insert', users.create);
-router.post('/findUser', users.findById);
+router.get("/list", users.list);
+router.post("/insert", users.create);
+router.post("/login", users.login);
 
 module.exports = router;

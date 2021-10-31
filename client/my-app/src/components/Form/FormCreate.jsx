@@ -6,30 +6,47 @@ import { Button, Row, Col } from "react-bootstrap";
 import * as Yup from "yup";
 import styled from "styled-components";
 import Axios from "axios";
+import { GetCookie } from "../Cookies";
 
 const Container = styled.div`
-  margin-top: 5px;
+  margin-top: 21px;
+  border: 1px solid #242424;
   border-radius: 5px;
-  padding: 8px;
+  padding: 11px;
+  background: #212529;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 `;
-const MyForm = ({ setList }) => {
+
+const MyForm = ({ setList, showMessage }) => {
+  const sendData = async (data) => {
+    const res = await Axios.post("http://localhost:3001/budgest/insert", data);
+    return res.data.insertId;
+  };
+
   const onSubmit = (values, { resetForm }) => {
-    Axios.post("http://localhost:3001/api/insert", values);
-    setList(values, "create");
+    const user = GetCookie("data");
+    const data = {
+      ...values,
+      id_usuario: user.id_usuario,
+    };
+    sendData(data).then((id)=>{
+      setList({ ...data, id: id }, "create");
+    });
     resetForm();
+    showMessage("Registro creado con exito! ");
   };
-  const refreshData = ({ resetForm }) => {
-    resetForm();
-  };
+
   return (
     <Container>
-      <h3>Agregar registro</h3>
+      <h4>Agregar gasto o ingreso</h4>
+      <hr />
       <Formik
         initialValues={{
-          concepto: "",
-          monto: "",
-          fecha: "",
-          tipo: "",
+          concepto: "asd",
+          monto: "123",
+          fecha: "1111-12-11",
+          tipo: "ingreso",
+          categoria: "comida",
         }}
         onSubmit={onSubmit}
         validationSchema={Yup.object({
@@ -41,49 +58,57 @@ const MyForm = ({ setList }) => {
             .required("Obligatorio")
             .typeError("Debe ser una fecha"),
           tipo: Yup.string().required("Obligatorio"),
+          categoria: Yup.string().required("Obligatorio"),
         })}
       >
-        <Form>
-          <Row style={{ justifyContent: "center" }}>
-            <Col sm={2}>
-              <Input type="text" name="concepto" label="Concepto" />
-            </Col>
-            <Col sm={2}>
-              <Input type="text" name="monto" label="Monto" />
-            </Col>
-            <Col sm={2}>
-              <Input type="date" name="fecha" label="Fecha" />
-            </Col>
-            <Col sm={2}>
-              <Select name="tipo" label="Tipo">
-                <option value="">Seleccionar tipo</option>
-                <option value="ingreso">Ingreso</option>
-                <option value="egreso">Egreso</option>
-              </Select>
-            </Col>
-            <Col sm={3} style={{ alignSelf: "center" }}>
-              <Button
-                size="sm"
-                type="submit"
-                style={{ marginRight: 5 }}
-                variant="success"
-              >
-                <i class="fas fa-check" style={{ marginRight: 5 }}></i>Agregar
-              </Button>
-              <Button
-                size="sm"
-                type="submit"
-                variant="warning"
-                onClick={() => refreshData}
-              >
-                <i class="fas fa-redo-alt" style={{ marginRight: 5 }}></i>
-                Limpiar datos
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        {({ resetForm }) => (
+          <Form>
+            <Row style={{ justifyContent: "center" }}>
+              <Col sm={2}>
+                <Input type="text" name="concepto" label="Concepto" />
+              </Col>
+              <Col sm={2}>
+                <Input type="text" name="monto" label="Monto" />
+              </Col>
+              <Col sm={2}>
+                <Select name="categoria" label="Categoria">
+                  <option value="">Elegir categoria</option>
+                  <option value="comida">Comida</option>
+                  <option value="gastos">Gastos</option>
+                  <option value="auto">Auto</option>
+                  <option value="banco">Banco</option>
+                </Select>
+              </Col>
+              <Col sm={3}>
+                <Input type="date" name="fecha" label="Fecha" />
+              </Col>
+              <Col sm={3}>
+                <Select name="tipo" label="Tipo">
+                  <option value="">Seleccionar tipo</option>
+                  <option value="ingreso">Ingreso</option>
+                  <option value="egreso">Egreso</option>
+                </Select>
+              </Col>
+            </Row>
+            <Row style={{ justifyContent: "center" }}>
+              <Col sm={3} style={{ alignSelf: "center" }}>
+                <Button
+                  size="sm"
+                  type="submit"
+                  style={{ marginRight: 5 }}
+                  variant="success"
+                >
+                  <i class="fas fa-check" style={{ marginRight: 5 }}></i>Agregar
+                </Button>
+                <Button size="sm" variant="warning" onClick={resetForm}>
+                  <i class="fas fa-redo-alt" style={{ marginRight: 5 }}></i>
+                  Limpiar datos
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        )}
       </Formik>
-      <hr />
     </Container>
   );
 };
