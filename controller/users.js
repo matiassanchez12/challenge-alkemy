@@ -1,5 +1,4 @@
 const { db } = require("../db/db.js");
-const jwt = require("jsonwebtoken");
 
 exports.list = (req, res) => {
     const sqlSelect = "SELECT * from usuarios ORDER BY id DESC LIMIT 10";
@@ -20,26 +19,11 @@ exports.login = (req, res) => {
         } else if (!user) {
             return res.status(200).json({ message: "error" });
         }
-        jwt.sign({ user }, "secretkey", (err, token) => {
-            return res.status(200).json({
-                message: "ok",
-                token: token,
-                user: user
-            });
+        return res.status(200).json({
+            message: "ok",
+            user: user,
         });
     });
-};
-
-exports.verifyToken = (req, res) => {
-    const bearerHeader = req.headers["authorization"];
-
-    if (typeof bearerHeader !== "undefined") {
-        const bearerToken = bearerHeader.split(" ")[1];
-        req.token = bearerToken;
-        next();
-    } else {
-        res.status(200).json({ message: "error" });
-    }
 };
 
 exports.create = (req, res) => {

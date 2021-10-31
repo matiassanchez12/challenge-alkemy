@@ -3,9 +3,9 @@ import { Form, Row, Col } from "react-bootstrap";
 
 const ListHeader = ({ setFilter }) => {
   return (
-    <Row style={{ marginBottom: 25, marginTop: 25 }}>
+    <Row style={{ marginBottom: 25, marginTop: 25, rowGap: 20 }}>
       <Col sm={7}></Col>
-      <Col sm={3}>
+      <Col sm={3} >
         <Form.Select onChange={(e) => setFilter({by: 'category', value: e.target.value})}>
           <option value="">Filtrar por categoria</option>
           <option value="comida">Comida</option>

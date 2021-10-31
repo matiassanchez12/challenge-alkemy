@@ -13,7 +13,7 @@ import ResultRow from "./ResultRow";
 const MyTable = ({ setToast, data }) => {
   const [filter, setFilter] = useState({ by: "", value: "" });
   const [initialState, setInitialState] = useState([...data]);
- 
+
   const showMessageSuccess = (message) => {
     setToast({
       message: message,
@@ -25,7 +25,6 @@ const MyTable = ({ setToast, data }) => {
     switch (type) {
       case "create":
         setInitialState([...initialState, newData]);
-        console.log(initialState);
         break;
       case "update":
         setInitialState(
@@ -100,10 +99,7 @@ const MyTable = ({ setToast, data }) => {
                     showMessage={showMessageSuccess}
                   />
                 </AcordionRow>
-                <AcordionRow
-                  eventKey="1"
-                  style={{ display: `${data.id}-${i}` }}
-                >
+                <AcordionRow eventKey="1">
                   <FormDelete
                     data={data}
                     setList={refreshList}

@@ -42,11 +42,11 @@ const MyForm = ({ setList, showMessage }) => {
       <hr />
       <Formik
         initialValues={{
-          concepto: "asd",
-          monto: "123",
-          fecha: "1111-12-11",
-          tipo: "ingreso",
-          categoria: "comida",
+          concepto: "",
+          monto: "",
+          fecha: "",
+          tipo: "",
+          categoria: "",
         }}
         onSubmit={onSubmit}
         validationSchema={Yup.object({

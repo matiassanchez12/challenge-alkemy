@@ -38,7 +38,7 @@ const Formlogin = ({ setUser }) => {
       ) : null}
       <Formik
         initialValues={{
-          email: "admin",
+          email: "admin@correo.com",
           password: "admin",
         }}
         onSubmit={onSubmit}

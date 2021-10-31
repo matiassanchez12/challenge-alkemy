@@ -8,7 +8,7 @@ const Resultrow = ({ list }) => {
         if (element.tipo === "ingreso") {
           res = parseInt(element.monto) + res;
         } else {
-          res = parseInt(element.monto) - res;
+          res = res - parseInt(element.monto);
         }
       });
     }

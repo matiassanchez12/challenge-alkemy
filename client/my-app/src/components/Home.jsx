@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import MyTable from "./Table/MyTable";
 import { Container } from "react-bootstrap";
 import Nav from "./Nav";
-import Footer from "./Footer";
 import Toast from "./Form/MyToast";
 import Loader from "./Loader";
 import Axios from "axios";

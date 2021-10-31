@@ -21,7 +21,6 @@ exports.create = (req, res) => {
     db.query(
         sqlInsert, [id_usuario, concepto, monto, tipo, fecha, categoria],
         (err, result) => {
-            console.log(result)
             res.send(result);
         }
     );
