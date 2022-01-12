@@ -4,7 +4,7 @@ En el inicio se encuentra un login y un registro para que al ingresar al sistema
 
 Las tecnologias principales utilizadas son: React, Express, MySql, React-Bootstrap, Styled-Components.
 
-La base de datos es relacional con SQL, se la encuentra en un archivo llamado "". 
+La base de datos es relacional con SQL, se la encuentra en un archivo llamado "crud.sql". 
 
 Para comenzar, es necesario descargar las librerias utilizadas con npm install, luego con npm start ya deberia funcionar. 
 
