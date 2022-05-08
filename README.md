@@ -9,5 +9,3 @@ La base de datos es relacional con SQL, se la encuentra en un archivo llamado "c
 Para comenzar, es necesario descargar las librerias utilizadas con npm install, luego con npm start ya deberia funcionar. 
 
 Ante cualquier duda sobre el codigo o algun consejo sobre mejora, estoy a disposición. 
-
-Saludos! :)
